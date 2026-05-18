@@ -19,7 +19,10 @@ app = Flask(__name__)
 flask_cors.CORS(app, resources={r"/api/v1/*": {"origins": "*"}})  # Enable CORS for all /api/v1/* endpoints
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # Limit upload size to 10MB
 
-model_sessions = {}  # Dictionary to store rembg sessions for different models
+# Dictionary to store rembg sessions for different models
+model_sessions = {
+    "silueta": new_session("silueta"),
+}  
 
 def get_session(model_name):
     """
@@ -58,9 +61,10 @@ def remove_bg():
     if file is None:
         abort(400, description="Missing 'image' file field")
 
-    # model sessions
+    # model sessions 
+    # read the ./model.md file to get the available models and their corresponding rembg model names
     model_map = {
-        "default": "u2net",
+        "default": "silueta",
         "person": "u2net_human_seg",
         "illustration": "isnet-anime",
     }
@@ -69,7 +73,7 @@ def remove_bg():
     model = request.form.get("model", "default").lower()
 
     # actaul rembg model
-    model_name = model_map.get(model, "u2net")  # default to "u2net" if model is not recognized
+    model_name = model_map.get(model, "silueta")  # default to "silueta" if model is not recognized
 
     # get session | fallback ( use default )
     session = get_session(model_name)
@@ -93,4 +97,4 @@ def remove_bg():
     return send_file(buffer, mimetype="image/png")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

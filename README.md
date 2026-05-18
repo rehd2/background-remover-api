@@ -61,7 +61,7 @@ python app.py
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/removebg \
-  -H "Authorization: Bearer your_secure_token_here" \
+  -H "Authorization: Bearer <your_secure_token_here>" \
   -F "image=@/path/to/your/image.jpg" \
   -F "model=default" \
   --output output.png

@@ -7,7 +7,7 @@ A simple Flask API that removes image backgrounds using AI (rembg + ONNX).
 ## Features
 
 - Remove image backgrounds
-- Multiple models (default, person, illustration)
+- Multiple models
 - Returns transparent PNG
 - Token-protected API
 - Easy deployment (Render / Railway)
@@ -52,7 +52,7 @@ python app.py
 - Method: POST
 - Form Data:
   - `image`: (file) The image to process
-  - `model`: (string, optional) Model to use (`default`, `person`, `illustration`)
+  - `model`: (string, optional) Model to use (`fast`, `advanced`). Defaults to `fast`.
 - Headers:
   - `Authorization: Bearer <your_secure_token_here>`
 - Response: Processed image (PNG with transparent background)
@@ -63,6 +63,6 @@ python app.py
 curl -X POST http://localhost:5000/api/v1/removebg \
   -H "Authorization: Bearer <your_secure_token_here>" \
   -F "image=@/path/to/your/image.jpg" \
-  -F "model=default" \
+  -F "model=fast" \
   --output output.png
 ```

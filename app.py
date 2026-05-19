@@ -22,12 +22,13 @@ app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # Limit upload size to 10MB
 # Dictionary to store rembg sessions for different models
 model_sessions = {
     "silueta": new_session("silueta"),
+    "isnet-general-use": new_session("isnet-general-use")  # default model session,
 }  
 
 def get_session(model_name):
     """
     Get the rembg session for the specified model. If the model is not loaded, it will be loaded and stored in the model_sessions dictionary.
-    Args:    model_name (str): The name of the model to use. Can be "u2net", "human", or "illustration".
+    Args:    model_name (str): The name of the model to use. Can be "fast", "advanced"
     Returns:   The rembg session for the specified model.
     """
     if model_name not in model_sessions:
@@ -46,8 +47,7 @@ def remove_bg():
     Expects a multipart/form-data request with the following fields:
     - image: The image file to process.
     - model: (optional) The model to use for background removal. 
-             Can be one of "u2net", "human", or "illustration". 
-             Defaults to "u2net" if not provided.
+             Can be "fast" (default) or "advanced".
     Returns:
     - A PNG image with the background removed.
     """
@@ -64,13 +64,13 @@ def remove_bg():
     # model sessions 
     # read the ./model.md file to get the available models and their corresponding rembg model names
     model_map = {
-        "default": "silueta",
-        "person": "u2net_human_seg",
-        "illustration": "isnet-anime",
+        "fast": "silueta",  # default model
+        "advanced": "isnet-general-use",
+        # "person": "u2net_human_seg", "illustration": "u2net_illustration"
     }
 
     # user selected model
-    model = request.form.get("model", "default").lower()
+    model = request.form.get("model", "fast").lower()
 
     # actaul rembg model
     model_name = model_map.get(model, "silueta")  # default to "silueta" if model is not recognized
@@ -97,4 +97,4 @@ def remove_bg():
     return send_file(buffer, mimetype="image/png")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

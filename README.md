@@ -4,6 +4,13 @@ A simple Flask API that removes image backgrounds using AI (rembg + ONNX).
 
 ---
 
+## Sample
+
+<p align="center">
+  <img src="./assets/demo.jpg" alt="demo" width="400">
+  <img src="./assets/output.png" alt="output" width="400">
+</p>
+
 ## Features
 
 - Remove image backgrounds

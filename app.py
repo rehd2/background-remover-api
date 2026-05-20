@@ -21,8 +21,8 @@ app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # Limit upload size to 10MB
 
 # Dictionary to store rembg sessions for different models
 model_sessions = {
-    "silueta": new_session("silueta"),
-    "isnet-general-use": new_session("isnet-general-use")  # default model session,
+    "silueta": new_session("silueta"),   # default model session,
+    # "isnet-general-use": new_session("isnet-general-use")
 }  
 
 def get_session(model_name):
